@@ -17,6 +17,8 @@ public class TicketsPage {
     public static By emailInput=By.id("Email");
     public static By repEmailInput=By.id("RepEmail");
     public static By phoneInput=By.id("Telefono");
+    public static By continueButton=By.linkText("Continuar");
+    public static By bookAndContinueButton=By.xpath("//*[contains(@onclick, 'BotonReservarYSeguir')]");
     
     public void selectSeat(WebDriver driver, int num_row, int num_seat)
     { 
@@ -30,13 +32,13 @@ public class TicketsPage {
       wait.until(AdditionalConditions.jQueryAJAXCallsHaveCompleted());
       wait.until(ExpectedConditions.attributeContains(selectedSeat.findElement(By.tagName("img")), "src", "seleccionado"));
       
-      driver.findElement(By.linkText("Continuar")).click();
+      driver.findElement(continueButton).click();
       
     }
     
     public void ticketType(WebDriver driver)
     { 
-      driver.findElement(By.xpath("//*[contains(@onclick, 'BotonReservarYSeguir')]")).click();
+      driver.findElement(bookAndContinueButton).click();
       
     }
     

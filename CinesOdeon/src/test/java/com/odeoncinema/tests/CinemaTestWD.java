@@ -1,10 +1,7 @@
 package com.odeoncinema.tests;
 
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import com.odeoncinema.DriverFactory;
@@ -19,22 +16,21 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.StringContains.containsString;
 
-import org.hamcrest.Matcher;
 
 public class CinemaTestWD extends DriverFactory {
-
-    @Test
+	public static String url_index= "http://www.odeonmulticines.com/Principal/index";
+	public static String cinema="TRES CANTOS";
+	public static String movieTitle="THOR: RAGNAROK";
+	public static String sessionDate="09/11/2017";
+	public static String sessionHour="20:05";
+	public static int sessionRow=15;
+	public static int sessionSeat=4;
+	public static String email="vmpuerto75@gmail.com";
+	public static String phoneNumber="555123456";
+    
+	@Test
     public void buyTicket() throws Exception {
-    	String url_index= "http://www.odeonmulticines.com/Principal/index";
-    	String cinema="TRES CANTOS";
-        String movieTitle="THOR: RAGNAROK";
-        String sessionDate="09/11/2017";
-        String sessionHour="20:05";
-        int sessionRow=15;
-        int sessionSeat=2;
-        String email="vmpuerto75@gmail.com";
-        String phoneNumber="555123456";
-        
+    	
         WebDriver driver=getDriver();
         driver.get(url_index);
     	IndexPage indxp=new IndexPage();
@@ -49,8 +45,7 @@ public class CinemaTestWD extends DriverFactory {
     	//ticketsp.cancelPurchase(driver);
     	ticketsp.purchaseTicket(driver, email, phoneNumber);
     	PaymentPage payp=new PaymentPage();
-    	payp.selectIUPay(driver);
-    	assertThat(driver.getTitle(), containsString("iupay"));
-    	//assertThat(driver.findElement(By.xpath("/html/body/div[1]/nav/div/div[1]/a")).getText(), is(equalTo("OM - odeon-tres-cantos")));
+    	payp.waitPage(driver);
+    	assertThat(driver.getTitle(), containsString("BBVA TPV Virtual"));
     }
 }

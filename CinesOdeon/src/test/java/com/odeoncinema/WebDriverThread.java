@@ -36,7 +36,7 @@ public class WebDriverThread {
 
     public void quitDriver() {
         if (null != webdriver) {
-           // webdriver.quit();
+            webdriver.quit();
         }
     }
 
