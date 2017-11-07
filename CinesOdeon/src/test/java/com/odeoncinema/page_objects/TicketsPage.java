@@ -1,14 +1,22 @@
 package com.odeoncinema.page_objects;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.odeoncinema.conditions.AdditionalConditions;
+
 public class TicketsPage {
 
     public static By numberRowsId=By.id("NumFila");
+    public static By cancelButton=By.id("BtnCancelar");
+    public static By acceptButton=By.className("BtnAceptar");
+    public static By emailInput=By.id("Email");
+    public static By repEmailInput=By.id("RepEmail");
+    public static By phoneInput=By.id("Telefono");
     
     public void selectSeat(WebDriver driver, int num_row, int num_seat)
     { 
@@ -19,6 +27,7 @@ public class TicketsPage {
       selectedSeat.click();
       WebDriverWait wait = new WebDriverWait(driver, 15, 100);
       //Wait until is selected
+      wait.until(AdditionalConditions.jQueryAJAXCallsHaveCompleted());
       wait.until(ExpectedConditions.attributeContains(selectedSeat.findElement(By.tagName("img")), "src", "seleccionado"));
       
       driver.findElement(By.linkText("Continuar")).click();
@@ -32,8 +41,18 @@ public class TicketsPage {
     }
     
     public void cancelPurchase(WebDriver driver)
-    { 
-      driver.findElement(By.id("BtnCancelar")).click();
-      
+    {  WebDriverWait wait = new WebDriverWait(driver, 15, 100);
+       wait.until(ExpectedConditions.presenceOfElementLocated(cancelButton)).click();;
+    }
+    
+    public void purchaseTicket(WebDriver driver, String email, String phoneNumber)
+    {  WebDriverWait wait = new WebDriverWait(driver, 15, 100);
+       wait.until(ExpectedConditions.presenceOfElementLocated(acceptButton));
+       driver.findElement(emailInput).sendKeys(email);
+       driver.findElement(repEmailInput).sendKeys(email);
+       driver.findElement(phoneInput).sendKeys(phoneNumber);
+       driver.findElement(acceptButton).click();
+       Alert alert = driver.switchTo().alert();
+       alert.accept();
     }
 }
